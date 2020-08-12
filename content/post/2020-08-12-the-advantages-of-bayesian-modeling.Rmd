@@ -1,0 +1,55 @@
+---
+title: The advantages of Bayesian modeling
+author: Matthew
+date: '2020-08-12'
+slug: the-advantages-of-bayesian-modeling
+categories: []
+tags: []
+---
+
+*Recently I was asked by a colleague what the benefits of Bayesian analysis were. This essay represents my thinking as of today, about 10 years into being a statistician and ~2 years actually practicing some Bayesian analysis.*
+
+*We all want to fit models to data that increase our understanding and make clear what we should do next.* As a population health scientist, I'm often interested in estimating the effect of an exposure on an outcome. Obviously that's complicated by issues like unmeasured confounding, but we try to get as close as possible. Once an effect is established, other questions come up: how many people do we need to treat to prevent one case of the disease? Is the intervention cost effective? Are we certain enough about the effects of the exposure that we are willing to spend a lot of money to change it? What would we predict differently about a person who is at risk for this disease now, that we didn't know before? We hope our analyses of health data leads us to a clear next step, be it the next experiment or designing a new intervention.
+
+*The problem is that data are complex*. They are messy. They do not fit the textbook examples we had in class. For example, real data can have missing values, variables can have known measurement error, and observations can be correlated (*e.g.*, because of neighborhood effects on health). But because these issues can require quite niche methods from the classical/Frequentist statistics literature, we often don't implement them under the burden of grant and/or collaborator deadlines. So we note these issues as limitations in the discussion section, leaving ourselves feeling not quite satisfied Scientifically. We didn't take into account as much as we could have, and who knows what effect that would have on our conclusions? Maybe we are leading ourselves (and others) astray? And as good Scientists we all know that we should be skeptical about our own ideas. Feynman said it well in his [1974 commencement address to Caltech](http://calteches.library.caltech.edu/51/2/CargoCult.htm):
+
+> I’m talking about a specific, extra type of integrity that is not lying, but bending over backwards to show how you’re maybe wrong, that you ought to do when acting as a scientist.  And this is our responsibility as scientists, certainly to other scientists, and I think to laymen.
+
+Unfortunately, the complexities of real world data often overcome the data analysis tools we have at our disposal.
+
+That's why I've come to love Bayesian data analysis. You often don't have to make assumptions you know to be false *and could possibly affect your results*. Many approaches built into modern Bayesian software directly deal with measurement error or laboratory values missing because they are below the limit of detection. And I think many modern proponents of applied Bayesian analysis and writers of software came to it because the complexity of their theory or their data could not be supported by standard statistical methods. I've always had a certain fascination with the ability to account for any uncertainty in your thinking and have that uncertainty fully propagate through to your final conclusions. It's Scientific integrity, as Feynman defined it, in action.
+
+Approaching a data analysis from the Bayesian perspective allows three main advantages: uncertainty is easy to interpret, uncertainty is easy to account for, and you can estimate basically any model you can write down.
+
+## Uncertainty is easy to interpret^[One of my PhD committee members, George Howard, rightly questions where the data is to support that Bayesian analysis is easier to interpret. I am not aware of any studies that directly provide evidence. But there are plenty of studies that show that anyone from physicians to PhD statisticians make mistakes in interpreting p-values and/or confidence intervals.]
+
+When you take your first introductory statistics course, when you got to confidence intervals the instructor probably emphasized that the follow interpretation is incorrect:
+
+> The probability that the true value lies inside this interval is 0.95.
+
+Rather, the correct interpretation is more convoluted:
+
+> If I were to repeat this experiment over and over and estimate this interval the same way every time, then the proportion of intervals that would contain the true value is 0.95.
+
+The difference in wording is fairly minor, and you can interpret the interval as the true values generally consistent with the data in your study. But a big advantage of Bayesian analysis is that 95% *credible intervals* do have the first interpretation. That is, an interval for an odds ratio that is 1.1 - 1.2 means that you are 95% sure^[The word "sure" also emphasizes that Bayesian analysis and Frequentist analysis view probability differently. Bayesian analysis views probability as a belief or a bet, while Frequentist analysis views probability as a proportion over a hypothetically long run of extra experiments. Given we usually only have one experiment in population health, I find the Bayesian perspective more practical.] the true odds ratio is within that interval. And a 95% credible interval isn't the only useful summary of Bayesian parameter estimates. You can ask other questions, such as, "What's the probability that the odds ratio is greater than 1? Less than 1? What's the probability that it is greater than 1.1, which I have determined is a clinically significant difference from 1?" Another useful summary can be the median of the Bayesian estimates of the odds ratio (or whatever other parameter), because it can be interpreted as a 50% probability that the true value is higher than that number and 50% probability that it's below. Understanding the distribution of uncertainty about our estimates is very natural in a Bayesian analysis.
+
+## Uncertainty is easy to account for
+
+
+
+## You can estimate basically any model you can write down
+
+The final "nail in the coffin" for me on using Frequentist strategies to tackle complex data came for me while mentoring a GRA on a statistical analysis of youth living with HIV. Anyone familiar with HIV studies will know that viral load is an important confounder to take into account, but medications for HIV are so good these days that many participants in a study will have an undetectable viral load. If the particular assay being used has a limit of detection of 50 copies/mL, then all you know is that the participant's viral load is between 0 and 50. While censored data like this can be analyzed using many different methods if it is the outcome (e.g., survival analysis), a censored covariate is a more difficult problem to attack. We eventually implemented the method described [here](https://pubmed.ncbi.nlm.nih.gov/21710558/) in the new `R` package [`lodr`](https://cran.rstudio.com/web/packages/lodr/index.html). Although the GRA worked very hard and diligently, it took about a year to learn the method, learn `C++`, implement the method, debug, and finally publish an `R` package. When I used a Bayesian approach to treat the censored values as parameters to be estimated, even though I was just a beginning Bayesian, I had the method implemented in ~2 hours. Regardless of actual computation time (which was about the same), the difference in *development time* to get a working solution was incredible.
+
+The solution hinged on the fact that everything that's know in Bayesian analysis is data and everything that's unknown is a parameter. So a linear regression model with a censored covariate might look something like this:
+
+$$y \sim N(\mu, \sigma^2)$$
+
+$$\mu = \beta_0 + x_1\beta_1$$
+
+For the participants without a measured viral load value, all you have to do is assume they come from the same distribution as the observed values but need to be estimated. In other words,
+
+$$x_1 \sim truncN(\mu_{x_1}, \sigma^2_{x_1}, 0, 50),$$ where 0 represents the lower bound of the missing values and 50 represents the upper bound of the missing values. Bayesian software will sample (or "impute") those missing values on the fly and fit the overall regression model you are interested in, accounting for the uncertainty in the imputed values. Basically, as long as you can write down a model you believe to be reasonable for the missing values (the missing values could have depended on other variables without any real added complication to the estimation), you can fit that model in Bayesian data analysis.^[Just like maximum likelihood, Monte Carlo methods that are used to fit Bayesian models have their own idiosyncracies and failures. Sometimes the model doesn't converge and you have to figure out what to do next. But I've found those issues much less common than issues fitting, say, mixed effects models using maximum likelihood.]
+
+## Summary
+
