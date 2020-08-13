@@ -1,6 +1,12 @@
 ---
-date: "2016-05-05T21:48:51-07:00"
+date: 
 title: About
 ---
 
-This is a "hello world" example website for the [**blogdown**](https://github.com/rstudio/blogdown) package. The theme was forked from [@jrutheiser/hugo-lithium-theme](https://github.com/jrutheiser/hugo-lithium-theme) and modified by [Yihui Xie](https://github.com/yihui/hugo-lithium).
+I'm an Assistant Professor in the [Division of Pharmacotherapy and Experimental Therapeutics](https://pharmacy.unc.edu/divisions/dpet/) at the [UNC Eshelman School of Pharmacy at the University of North Carolina at Chapel Hill](https://pharmacy.unc.edu/). I am trained as a biostatistician and epidemiologist, with a focus on cardiovascular diseases, as well as developing interests in pregnancy and neonatal care. 
+
+I am a budding applied Bayesian statistician, and I also have experience in spatial statistics, survival analysis, and machine learning. My favorite statisticians/scientists to follow are [Frank Harrell](https://www.fharrell.com/) (we grew up on the same street!), [Andrew Gelman](https://statmodeling.stat.columbia.edu/), [Richard McElreath](https://xcelab.net/rm/), and [Sabine Hossenfelder](http://backreaction.blogspot.com/). These scientists might be described as "grumpy," which I think makes them particularly interesting to follow. If you have opinions that cost you something socially to maintain and proclaim...then you might have a good reason to have those opinions.
+
+My personal statement in my NIH biosketch is below:
+
+> Many scientific studies propose wonderful new hypotheses or novel techniques. However, many investigators struggle with how to quantify the uncertainty in their results or approach to unexpected complexities in their data. Therefore, I became a biostatistician in order to improve our quantification of Scientific knowledge, particularly concerning human disease, its causes, and potential therapies. As an Assistant Professor in the Division of Pharmacotherapy and Experimental Therapeutics at the UNC Eshelman School of Pharmacy, I use cutting-edge statistical models to understand complex data in research studies of human health, with particular focus on cardiovascular diseases, infectious diseases such as HIV/AIDS and malaria, and population-level exposures such as air pollution. To address the complexities of these data I have expertise in spatial data analysis, supervised and unsupervised machine learning, and Bayesian multilevel modeling. My training in both Biostatistics and Epidemiology allows me to answer high-impact questions on human disease with the best methods currently available. These expertise are critical components of advancing Scientific understanding of human diseases and delivering safe and effective therapies to treat them.

@@ -24,10 +24,11 @@ We all want to fit models to data that increase our understanding and make clear
     <item>
       <title>About</title>
       <link>/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
+      <description>I&amp;rsquo;m an Assistant Professor in the Division of Pharmacotherapy and Experimental Therapeutics at the UNC Eshelman School of Pharmacy at the University of North Carolina at Chapel Hill. I am trained as a biostatistician and epidemiologist, with a focus on cardiovascular diseases, as well as developing interests in pregnancy and neonatal care.
+I am a budding applied Bayesian statistician, and I also have experience in spatial statistics, survival analysis, and machine learning.</description>
     </item>
     
   </channel>
