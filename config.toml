@@ -10,6 +10,9 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     post = "/:year/:month/:day/:slug/"
 
 [[menu.main]]
+    name = "CV"
+    url = "/CV.pdf"
+[[menu.main]]
     name = "About"
     url = "/about/"
 [[menu.main]]
